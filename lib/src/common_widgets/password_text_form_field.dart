@@ -9,13 +9,17 @@ class PasswordTextFormField extends ConsumerWidget {
   const PasswordTextFormField(
       {Key? key,
       this.initialValue,
-      this.suffixText,
+      this.labelText,
+      this.enabled,
+      this.icon,
       this.controller,
       this.validator})
       : super(key: key);
 
   final String? initialValue;
-  final String? suffixText;
+  final String? labelText;
+  final bool? enabled;
+  final Widget? icon;
   final TextEditingController? controller;
   final String? Function(String? value)? validator;
 
@@ -28,8 +32,10 @@ class PasswordTextFormField extends ConsumerWidget {
       obscureText: isObscure,
       enableSuggestions: false,
       autocorrect: false,
+      enabled: enabled,
       decoration: InputDecoration(
-          suffixText: suffixText,
+          labelText: labelText,
+          icon: icon,
           suffixIcon: IconButton(
               onPressed: () =>
                   ref.read(obscureTextProvider.notifier).state = !isObscure,
