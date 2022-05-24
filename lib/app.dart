@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hms_sv_app/src/features/startup/presentation/startup_page.dart';
 import 'package:hms_sv_app/src/global_provider.dart';
+import 'package:hms_sv_app/src/routing/app_router.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -17,7 +18,8 @@ class App extends StatelessWidget {
         // appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
         primarySwatch: Colors.blue,
       ),
-      home: const StartupApp(),
+      initialRoute: AppRoutes.startupPage,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
@@ -37,7 +39,7 @@ class StartupApp extends ConsumerWidget {
                   IconButton(
                       onPressed: () async =>
                           await ref.read(firebaseAuthProvider).signOut(),
-                      icon: const Icon(Icons.close))
+                      icon: const CloseButton())
                 ],
               ),
               body: const Center(
