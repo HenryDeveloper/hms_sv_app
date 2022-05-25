@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hms_sv_app/src/common_widgets/password_text_form_field.dart';
 import 'package:hms_sv_app/src/constants/strings.dart';
+import 'package:hms_sv_app/src/routing/app_router.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -37,9 +38,25 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     icon: Icon(Icons.password),
                     labelText: Strings.passwordTextFormFieldText,
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        onPressed: () async => await Navigator.pushNamed(
+                            context, AppRoutes.signUpPage),
+                        child: const Text(Strings.registerButtonText)),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        onPressed: () {},
+                        child: const Text(Strings.restorePasswordButtonText)),
+                  ),
                   ElevatedButton(
                       onPressed: () {},
-                      child: const Text(Strings.startButtonText))
+                      child: const Text(Strings.startButtonText)),
+                  ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(Strings.seeServicesButtonText))
                 ],
               )),
         ));

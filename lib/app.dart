@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hms_sv_app/src/features/startup/presentation/startup_page.dart';
+import 'package:hms_sv_app/src/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:hms_sv_app/src/global_provider.dart';
 import 'package:hms_sv_app/src/routing/app_router.dart';
 
@@ -24,8 +24,8 @@ class App extends StatelessWidget {
   }
 }
 
-class StartupApp extends ConsumerWidget {
-  const StartupApp({Key? key}) : super(key: key);
+class StartupPage extends ConsumerWidget {
+  const StartupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,7 +47,7 @@ class StartupApp extends ConsumerWidget {
               ),
             );
           } else {
-            return const Scaffold(body: StartupPage());
+            return const Scaffold(body: SignInPage());
           }
         },
         loading: () => const Center(

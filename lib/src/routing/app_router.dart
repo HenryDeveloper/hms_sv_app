@@ -15,7 +15,7 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.startupPage:
         return MaterialPageRoute<dynamic>(
-          builder: (_) => const StartupApp(),
+          builder: (_) => const StartupPage(),
           settings: settings,
         );
       case AppRoutes.signInPage:
