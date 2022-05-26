@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hms_sv_app/src/features/auth/domain/auth_model.dart';
 
 abstract class AuthState {
   const AuthState();
@@ -13,14 +12,13 @@ class AuthLoading extends AuthState {
   const AuthLoading();
 }
 
-class AuthLoaded<T extends AuthModel> extends AuthState
-    implements EquatableMixin {
-  final T model;
+class AuthLoaded extends AuthState implements EquatableMixin {
+  final bool isSuccess;
 
-  const AuthLoaded(this.model);
+  const AuthLoaded(this.isSuccess);
 
   @override
-  List<Object?> get props => [model];
+  List<Object?> get props => [isSuccess];
 
   @override
   bool? get stringify => true;

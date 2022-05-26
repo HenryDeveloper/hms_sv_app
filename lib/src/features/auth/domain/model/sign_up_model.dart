@@ -1,4 +1,4 @@
-import 'package:hms_sv_app/src/features/auth/domain/auth_model.dart';
+import 'package:hms_sv_app/src/features/auth/domain/model/auth_model.dart';
 
 class SignUpModel extends AuthModel {
   final String? id;
