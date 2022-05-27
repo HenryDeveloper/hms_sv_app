@@ -6,20 +6,20 @@ import 'package:hms_sv_app/src/features/auth/domain/view_model/sign_up_view_mode
 import 'package:hms_sv_app/src/features/auth/presentation/states/auth_state.dart';
 
 class AuthController extends StateNotifier<AuthState> {
-  final AuthService authService;
-  final FirebaseCrashlytics firebaseCrashlytics;
+  final AuthService _authService;
+  final FirebaseCrashlytics _firebaseCrashlytics;
 
-  AuthController(this.authService, this.firebaseCrashlytics)
+  AuthController(this._authService, this._firebaseCrashlytics)
       : super(const AuthInitial());
 
   Future<void> signUpUser(SignUpViewModel viewModel) async {
     state = const AuthLoading();
 
     try {
-      final isSuccess = await authService.createUser(viewModel);
+      final isSuccess = await _authService.createUser(viewModel);
       state = AuthLoaded(isSuccess);
     } catch (e, s) {
-      firebaseCrashlytics.recordError(e, s);
+      _firebaseCrashlytics.recordError(e, s);
       state = AuthError(e.toString());
     }
   }
@@ -28,10 +28,10 @@ class AuthController extends StateNotifier<AuthState> {
     state = const AuthLoading();
 
     try {
-      final isSuccess = await authService.logIn(viewModel);
+      final isSuccess = await _authService.logIn(viewModel);
       state = AuthLoaded(isSuccess);
     } catch (e, s) {
-      firebaseCrashlytics.recordError(e, s);
+      _firebaseCrashlytics.recordError(e, s);
       state = AuthError(e.toString());
     }
   }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hms_sv_app/src/common_widgets/password_text_form_field.dart';
 import 'package:hms_sv_app/src/constants/strings.dart';
+import 'package:hms_sv_app/src/features/auth/domain/view_model/sign_in_view_model.dart';
+import 'package:hms_sv_app/src/features/auth/presentation/states/auth_state.dart';
+import 'package:hms_sv_app/src/global_provider.dart';
 import 'package:hms_sv_app/src/routing/app_router.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -14,8 +17,21 @@ class SignInPage extends ConsumerStatefulWidget {
 class _SignInPageState extends ConsumerState<SignInPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final emailTextEditingController = TextEditingController();
+  final passwordTextEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailTextEditingController.dispose();
+    passwordTextEditingController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var state = ref.watch(authControllerProvider);
+
     return Scaffold(
         appBar: AppBar(),
         body: Padding(
@@ -30,12 +46,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   TextFormField(
+                    controller: emailTextEditingController,
+                    validator: _validateValue,
                     decoration: const InputDecoration(
                         labelText: Strings.emailTextFormFieldText,
                         icon: Icon(Icons.email)),
                   ),
-                  const PasswordTextFormField(
-                    icon: Icon(Icons.password),
+                  PasswordTextFormField(
+                    controller: passwordTextEditingController,
+                    validator: _validateValue,
+                    icon: const Icon(Icons.password),
                     labelText: Strings.passwordTextFormFieldText,
                   ),
                   Align(
@@ -51,14 +71,36 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         onPressed: () {},
                         child: const Text(Strings.restorePasswordButtonText)),
                   ),
-                  ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(Strings.startButtonText)),
+                  state is AuthLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: () async {
+                            final formState = _formKey.currentState;
+
+                            if (formState != null && formState.validate()) {
+                              final viewModel = SignInViewModel(
+                                  emailTextEditingController.text.trimRight(),
+                                  passwordTextEditingController.text);
+
+                              await ref
+                                  .read(authControllerProvider.notifier)
+                                  .signInUser(viewModel);
+                            }
+                          },
+                          child: const Text(Strings.startButtonText)),
                   ElevatedButton(
                       onPressed: () {},
                       child: const Text(Strings.seeServicesButtonText))
                 ],
               )),
         ));
+  }
+
+  String? _validateValue(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Tiene que tener un valor";
+    }
+
+    return null;
   }
 }

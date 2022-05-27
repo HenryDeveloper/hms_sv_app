@@ -36,10 +36,10 @@ class StartupPage extends ConsumerWidget {
             return Scaffold(
               appBar: AppBar(
                 actions: [
-                  IconButton(
-                      onPressed: () async =>
-                          await ref.read(firebaseAuthProvider).signOut(),
-                      icon: const CloseButton())
+                  CloseButton(
+                    onPressed: () async =>
+                        await ref.read(firebaseAuthProvider).signOut(),
+                  )
                 ],
               ),
               body: const Center(
