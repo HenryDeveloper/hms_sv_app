@@ -35,6 +35,7 @@ class StartupPage extends ConsumerWidget {
           if (user != null) {
             return Scaffold(
               appBar: AppBar(
+                title: Text("Bienvenido ${user.displayName}"),
                 actions: [
                   CloseButton(
                     onPressed: () async =>
