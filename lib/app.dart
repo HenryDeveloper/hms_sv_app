@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hms_sv_app/src/features/auth/presentation/sign_in/sign_in_page.dart';
+import 'package:hms_sv_app/src/features/home/presentation/home_page.dart';
 import 'package:hms_sv_app/src/global_provider.dart';
 import 'package:hms_sv_app/src/routing/app_router.dart';
 
@@ -33,22 +34,9 @@ class StartupPage extends ConsumerWidget {
     return authStateChanges.when(
         data: (user) {
           if (user != null) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("Bienvenido ${user.displayName}"),
-                actions: [
-                  CloseButton(
-                    onPressed: () async =>
-                        await ref.read(firebaseAuthProvider).signOut(),
-                  )
-                ],
-              ),
-              body: const Center(
-                child: Text("Llego al body :D"), // solo prueba :D
-              ),
-            );
+            return const HomePage();
           } else {
-            return const Scaffold(body: SignInPage());
+            return const SignInPage();
           }
         },
         loading: () => const Center(

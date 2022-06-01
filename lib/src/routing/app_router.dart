@@ -28,6 +28,11 @@ class AppRouter {
           builder: (_) => const SignUpPage(),
           settings: settings,
         );
+      case AppRoutes.homePage:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const SignUpPage(),
+          settings: settings,
+        );
       default:
         return null;
     }

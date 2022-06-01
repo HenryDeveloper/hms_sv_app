@@ -37,3 +37,7 @@ final authControllerProvider =
   return AuthController(authService, firebaseCrashlytics);
 });
 // auth logic providers
+
+// home logic providers
+final selectedIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
+// home logic providers
