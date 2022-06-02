@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hms_sv_app/src/features/account/presentation/view_account/view_account_page.dart';
 import 'package:hms_sv_app/src/global_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -21,7 +22,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     Icon(Icons.logo_dev),
     Icon(Icons.flutter_dash),
     Icon(Icons.logo_dev),
-    Icon(Icons.logo_dev_sharp)
+    ViewAccountPage()
   ];
 
   late int _selectedIndex;
@@ -30,30 +31,24 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     _selectedIndex = ref.watch(selectedIndexProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [
-          CloseButton(
-            onPressed: () => ref.watch(firebaseAuthProvider).signOut(),
-          )
-        ],
-      ),
-      body: IndexedStack(index: _selectedIndex, children: _pages),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.black,
-        items: items,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          if (_selectedIndex == index) return;
+    return SafeArea(
+      child: Scaffold(
+        body: IndexedStack(index: _selectedIndex, children: _pages),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.black,
+          items: items,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            if (_selectedIndex == index) return;
 
-          ref
-              .read(selectedIndexProvider.notifier)
-              .update((state) => state = index);
-        },
+            ref
+                .read(selectedIndexProvider.notifier)
+                .update((state) => state = index);
+          },
+        ),
       ),
     );
   }
