@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hms_sv_app/src/constants/strings.dart';
 import 'package:hms_sv_app/src/global_provider.dart';
+import 'package:hms_sv_app/src/routing/app_router.dart';
 
 class ViewAccountPage extends StatelessWidget {
   const ViewAccountPage({Key? key}) : super(key: key);
@@ -25,9 +27,12 @@ class ViewAccountPage extends StatelessWidget {
                   ),
                   Consumer(
                     builder: (context, ref, child) {
-                      return const Text(
-                        "Saitama sensei",
-                        style: TextStyle(fontSize: 30),
+                      var displayName = ref.watch(userStateChangesProvider
+                          .select((value) => value.asData?.value?.displayName));
+
+                      return Text(
+                        displayName?.replaceAll("-", " ") ?? "My Profile",
+                        style: const TextStyle(fontSize: 30),
                       );
                     },
                   )
@@ -37,22 +42,24 @@ class ViewAccountPage extends StatelessWidget {
             child: ListView(
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                const ListTile(
-                  leading: Icon(Icons.edit),
-                  title: Text("Editar Perfil"),
+                ListTile(
+                  leading: const Icon(Icons.edit),
+                  title: const Text(Strings.editProfileText),
+                  onTap: () async => await Navigator.pushNamed(
+                      context, AppRoutes.updateAccountPage),
                 ),
                 const ListTile(
                   leading: Icon(Icons.password),
-                  title: Text("Cambiar Password"),
+                  title: Text(Strings.changePasswordText),
                 ),
                 const ListTile(
                   leading: Icon(Icons.home_outlined),
-                  title: Text("Mis Propiedades"),
+                  title: Text(Strings.myPropertiesText),
                 ),
                 Consumer(builder: (context, ref, child) {
                   return ListTile(
                     leading: const Icon(Icons.output),
-                    title: const Text("Salir"),
+                    title: const Text(Strings.logOutText),
                     onTap: () => ref.watch(firebaseAuthProvider).signOut(),
                   );
                 }),

@@ -1,4 +1,8 @@
 class Strings {
+  // SignIn Page
+  static const titleSignInText = "Login";
+  // SignIn Page
+
   // ButtonText
   static const signInButtonText = "Ingresar";
   static const registerButtonText = "Registrarse";
@@ -15,4 +19,11 @@ class Strings {
   static const passwordTextFormFieldText = "Password";
   static const confirmPasswordTextFormFieldText = "Confirmar password";
   // End TextFormField
+
+  // View Account Page
+  static const editProfileText = "Editar Perfil";
+  static const changePasswordText = "Cambiar Password";
+  static const myPropertiesText = "Mis Propiedades";
+  static const logOutText = "Salir";
+  // View Account Page
 }

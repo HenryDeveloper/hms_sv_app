@@ -32,68 +32,69 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   Widget build(BuildContext context) {
     var state = ref.watch(authControllerProvider);
 
-    return Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  TextFormField(
-                    controller: emailTextEditingController,
-                    validator: _validateValue,
-                    decoration: const InputDecoration(
-                        labelText: Strings.emailTextFormFieldText,
-                        icon: Icon(Icons.email)),
-                  ),
-                  PasswordTextFormField(
-                    controller: passwordTextEditingController,
-                    validator: _validateValue,
-                    icon: const Icon(Icons.password),
-                    labelText: Strings.passwordTextFormFieldText,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () async => await Navigator.pushNamed(
-                            context, AppRoutes.signUpPage),
-                        child: const Text(Strings.registerButtonText)),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () {},
-                        child: const Text(Strings.restorePasswordButtonText)),
-                  ),
-                  state is AuthLoading
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: () async {
-                            final formState = _formKey.currentState;
-
-                            if (formState != null && formState.validate()) {
-                              final viewModel = SignInViewModel(
-                                  emailTextEditingController.text.trimRight(),
-                                  passwordTextEditingController.text);
-
-                              await ref
-                                  .read(authControllerProvider.notifier)
-                                  .signInUser(viewModel);
-                            }
-                          },
-                          child: const Text(Strings.startButtonText)),
-                  ElevatedButton(
+    return SafeArea(
+      child: Scaffold(
+          body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  Strings.titleSignInText,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextFormField(
+                  controller: emailTextEditingController,
+                  validator: _validateValue,
+                  decoration: const InputDecoration(
+                      labelText: Strings.emailTextFormFieldText,
+                      icon: Icon(Icons.email)),
+                ),
+                PasswordTextFormField(
+                  controller: passwordTextEditingController,
+                  validator: _validateValue,
+                  icon: const Icon(Icons.password),
+                  labelText: Strings.passwordTextFormFieldText,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      onPressed: () async => await Navigator.pushNamed(
+                          context, AppRoutes.signUpPage),
+                      child: const Text(Strings.registerButtonText)),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
                       onPressed: () {},
-                      child: const Text(Strings.seeServicesButtonText))
-                ],
-              )),
-        ));
+                      child: const Text(Strings.restorePasswordButtonText)),
+                ),
+                state is AuthLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          final formState = _formKey.currentState;
+
+                          if (formState != null && formState.validate()) {
+                            final viewModel = SignInViewModel(
+                                emailTextEditingController.text.trimRight(),
+                                passwordTextEditingController.text);
+
+                            await ref
+                                .read(authControllerProvider.notifier)
+                                .signInUser(viewModel);
+                          }
+                        },
+                        child: const Text(Strings.startButtonText)),
+                ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(Strings.seeServicesButtonText))
+              ],
+            )),
+      )),
+    );
   }
 
   String? _validateValue(String? value) {

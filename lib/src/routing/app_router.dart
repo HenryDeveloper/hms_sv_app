@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_sv_app/app.dart';
+import 'package:hms_sv_app/src/features/account/presentation/edit_account/edit_account_page.dart';
 import 'package:hms_sv_app/src/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:hms_sv_app/src/features/auth/presentation/sign_up/sign_up_page.dart';
 
@@ -8,6 +9,7 @@ class AppRoutes {
   static const signInPage = '/sign-in-page';
   static const signUpPage = '/sign-up-page';
   static const homePage = '/home-page';
+  static const updateAccountPage = '/update-account-page';
 }
 
 class AppRouter {
@@ -31,6 +33,11 @@ class AppRouter {
       case AppRoutes.homePage:
         return MaterialPageRoute<dynamic>(
           builder: (_) => const SignUpPage(),
+          settings: settings,
+        );
+      case AppRoutes.updateAccountPage:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const EditAccountPage(),
           settings: settings,
         );
       default:

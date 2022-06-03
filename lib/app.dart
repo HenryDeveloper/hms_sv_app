@@ -17,6 +17,7 @@ class App extends StatelessWidget {
         // Use when all widgets work with Material 3 https://github.com/flutter/flutter/issues/91605
         // useMaterial3: true,
         // appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
         primarySwatch: Colors.blue,
       ),
       initialRoute: AppRoutes.startupPage,

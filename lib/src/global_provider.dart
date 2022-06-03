@@ -14,6 +14,10 @@ final firebaseAuthProvider = Provider<FirebaseAuth>(
 final authStateChangesProvider = StreamProvider.autoDispose<User?>(
   (ref) => ref.watch(firebaseAuthProvider).authStateChanges(),
 );
+
+final userStateChangesProvider = StreamProvider<User?>(
+  (ref) => ref.watch(firebaseAuthProvider).userChanges(),
+);
 // firebaseAuth providers
 
 // firebaseCrashlytics providers
