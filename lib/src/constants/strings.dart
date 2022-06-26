@@ -26,4 +26,17 @@ class Strings {
   static const myPropertiesText = "Mis Propiedades";
   static const logOutText = "Salir";
   // View Account Page
+
+  // Edit Account Page
+  static const updateButtonText = "Actualizar datos";
+  static const phoneNumberTextFormFieldText = "Número de teléfono";
+  static const genderText = "¿Con qué género te identificas?";
+  // Edit Account Page
+
+  // genderHelper
+  static const female = "Femenino";
+  static const male = "Maculino";
+  static const nonBinary = "No binario";
+  static const notToSayIt = "Prefiero no decirlo";
+  // genderHelper
 }

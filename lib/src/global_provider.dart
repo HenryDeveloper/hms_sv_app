@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hms_sv_app/src/features/account/data/interfaces/iaccout_repository.dart';
+import 'package:hms_sv_app/src/features/account/data/repositories/account_repository.dart';
 import 'package:hms_sv_app/src/features/auth/application/auth_service.dart';
 import 'package:hms_sv_app/src/features/auth/data/repositories/firebase_auth_repository.dart';
 import 'package:hms_sv_app/src/features/auth/presentation/controller/auth_controller.dart';
@@ -15,7 +17,7 @@ final authStateChangesProvider = StreamProvider.autoDispose<User?>(
   (ref) => ref.watch(firebaseAuthProvider).authStateChanges(),
 );
 
-final userStateChangesProvider = StreamProvider<User?>(
+final userStateChangesProvider = StreamProvider.autoDispose<User?>(
   (ref) => ref.watch(firebaseAuthProvider).userChanges(),
 );
 // firebaseAuth providers
@@ -45,3 +47,11 @@ final authControllerProvider =
 // home logic providers
 final selectedIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 // home logic providers
+
+// Profile logic providers
+final updateAccountRepositoryProvider =
+    Provider.autoDispose<IAccountRepository>(
+  (ref) => AccountRepository(
+      ref.watch(firebaseAuthProvider), ref.watch(firebaseCrashlyticsProvider)),
+);
+// Profile logic providers

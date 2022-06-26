@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hms_sv_app/src/constants/strings.dart';
@@ -17,10 +18,17 @@ class ViewAccountPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 65,
-                    backgroundImage: NetworkImage(
-                        "https://m.media-amazon.com/images/I/71qApJHME8L._AC_SX679_.jpg"),
+                  CachedNetworkImage(
+                    imageUrl:
+                        'https://m.media-amazon.com/images/I/71qApJHME8L._AC_SX679_.jpg',
+                    placeholder: (context, url) => const CircleAvatar(
+                      backgroundColor: Colors.amber,
+                      radius: 65,
+                    ),
+                    imageBuilder: (context, image) => CircleAvatar(
+                      backgroundImage: image,
+                      radius: 65,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -60,7 +68,7 @@ class ViewAccountPage extends StatelessWidget {
                   return ListTile(
                     leading: const Icon(Icons.output),
                     title: const Text(Strings.logOutText),
-                    onTap: () => ref.watch(firebaseAuthProvider).signOut(),
+                    onTap: () => ref.read(firebaseAuthProvider).signOut(),
                   );
                 }),
               ],

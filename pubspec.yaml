@@ -39,6 +39,8 @@ dependencies:
   firebase_crashlytics: ^2.8.0
   firebase_auth: ^3.3.18
   equatable: ^2.0.3
+  cached_network_image: ^3.2.1
+  cloud_firestore: ^3.1.18
 
 dev_dependencies:
   integration_test:
