@@ -42,14 +42,15 @@ class AccountRepository implements IAccountRepository {
 
   @override
   Future<AccountInfo> getAccount() async {
+    await Future.delayed(const Duration(seconds: 1));
     var user = _firebaseAuth.currentUser;
     if (user != null) {
       var nameParts = user.displayName?.split('-');
 
-      return AccountInfo(nameParts![0], nameParts[1], "2257-7777", "+503",
-          gender: Gender.male);
+      return AccountInfo(nameParts![0], nameParts[1],
+          phoneNumber: "2257-7777", countryArea: "+503", gender: Gender.male);
     }
 
-    return AccountInfo("", "", "", "");
+    return AccountInfo("", "");
   }
 }

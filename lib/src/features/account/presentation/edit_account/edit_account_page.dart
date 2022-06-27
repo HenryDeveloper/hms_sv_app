@@ -14,64 +14,72 @@ class EditAccountPage extends ConsumerStatefulWidget {
 class _EditAccountPageState extends ConsumerState<EditAccountPage> {
   @override
   Widget build(BuildContext context) {
+    var getProfile = ref.watch(getProfileProvider);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(Strings.editProfileText),
-      ),
-      body: SingleChildScrollView(
-          padding: const EdgeInsets.all(10),
-          child: Form(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                initialValue: nameParts?[0],
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.badge_outlined),
-                  labelText: Strings.nameTextFormFieldText,
+        appBar: AppBar(
+          title: const Text(Strings.editProfileText),
+        ),
+        body: getProfile.when(
+            data: (profile) => SingleChildScrollView(
+                padding: const EdgeInsets.all(10),
+                child: Form(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      initialValue: profile.firstName,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.badge_outlined),
+                        labelText: Strings.nameTextFormFieldText,
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: profile.lastName,
+                      //controller: surnameTextEditingController,
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
+                      //validator: _validateValue,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.badge_outlined),
+                        labelText: Strings.surnameTextFormFieldText,
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: profile.phoneNumber,
+                      //controller: surnameTextEditingController,
+                      keyboardType: TextInputType.phone,
+                      textCapitalization: TextCapitalization.words,
+                      //validator: _validateValue,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.phone),
+                        labelText: Strings.phoneNumberTextFormFieldText,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      Strings.genderText,
+                    ),
+                    ChoiceChipList(
+                      selectedChip: profile.gender?.index,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(50)),
+                        onPressed: () => {},
+                        child: const Text(Strings.updateButtonText))
+                  ],
+                ))),
+            error: (error, _) => Center(
+                  child: Text(error.toString()),
                 ),
-              ),
-              TextFormField(
-                initialValue: nameParts?[1],
-                //controller: surnameTextEditingController,
-                keyboardType: TextInputType.name,
-                textCapitalization: TextCapitalization.words,
-                //validator: _validateValue,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.badge_outlined),
-                  labelText: Strings.surnameTextFormFieldText,
-                ),
-              ),
-              TextFormField(
-                // initialValue: nameParts?[1],
-                //controller: surnameTextEditingController,
-                keyboardType: TextInputType.phone,
-                textCapitalization: TextCapitalization.words,
-                //validator: _validateValue,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.phone),
-                  labelText: Strings.phoneNumberTextFormFieldText,
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                Strings.genderText,
-              ),
-              const ChoiceChipList(
-                selectedChip: 1,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50)),
-                  onPressed: () => {},
-                  child: const Text(Strings.updateButtonText))
-            ],
-          ))),
-    );
+            loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                )));
   }
 }
